@@ -27,7 +27,8 @@ def cvGetFits(X, y, nfold, algo="ridge", alpha=1.0):
 	if len(np.shape(pred)) == 1: # scalar pred
 		r = scipy.stats.pearsonr(pred, y)[0]
 	else:
-		r = np.max([scipy.stats.pearsonr(pred[:,i], y[:,i])[0] for i in range(np.shape(pred)[1])])
+		# correlation across sentence vectors across voxels
+		r = np.mean([scipy.stats.pearsonr(pred[:,i], y[:,i])[0] for i in range(np.shape(pred)[1])])
 	return pred, r
 
 def searchlight(sub='P01'):
